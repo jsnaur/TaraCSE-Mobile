@@ -14,6 +14,7 @@ import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { TopicPicker } from '@/features/study/TopicPicker';
 import { getSubject } from '@/mocks/subjects';
 import { useSession } from '@/state/session';
+import { useStartPractice } from '@/state/study';
 import type { Difficulty } from '@/types/exam';
 import { spacing } from '@/theme/tokens';
 
@@ -37,6 +38,7 @@ export function PracticeSetupScreen() {
   const { subjectId, focus } = useLocalSearchParams<{ subjectId: string; focus?: string }>();
   const subject = getSubject(subjectId ?? '');
   const { plan } = useSession();
+  const startPractice = useStartPractice();
 
   const [topics, setTopics] = useState<Set<string>>(() => {
     const valid = subject?.topics.some((t) => t.id === focus);
@@ -77,7 +79,15 @@ export function PracticeSetupScreen() {
           size="lg"
           fullWidth
           disabled={!canStart}
-          onPress={() => router.push('/practice/session/new')}
+          onPress={() => {
+            const id = startPractice({
+              subjectId: subject.id,
+              topicIds: subject.topics.filter((t) => topics.has(t.id)).map((t) => t.id),
+              count,
+              difficulty,
+            });
+            router.push({ pathname: '/practice/session/[id]', params: { id } });
+          }}
         />
       }
     >

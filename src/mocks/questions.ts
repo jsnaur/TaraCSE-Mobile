@@ -1,4 +1,4 @@
-import type { Question } from '@/types/exam';
+import type { Difficulty, Question } from '@/types/exam';
 
 /**
  * Original sample questions written for this prototype. Never copy items from the
@@ -268,12 +268,34 @@ export const QUESTIONS: readonly Question[] = [
   },
 ];
 
-export function questionsFor(topicIds: readonly string[], count: number): Question[] {
-  const pool = QUESTIONS.filter((q) => topicIds.includes(q.topicId));
-  const source = pool.length > 0 ? pool : QUESTIONS;
+export interface DealOptions {
+  difficulty?: Difficulty;
+  /** Where to start in the pool, so an endless session's next batch continues the cycle. */
+  offset?: number;
+}
+
+/**
+ * Deals `count` questions for the chosen topics. The fixture bank is small, so the pool is
+ * padded in order of relevance: matching topic and difficulty, then the rest of those
+ * topics, then the same subject. Unknown topics fall back to the whole bank. Questions
+ * repeat only after the pool runs out.
+ */
+export function questionsFor(
+  topicIds: readonly string[],
+  count: number,
+  { difficulty = 'mixed', offset = 0 }: DealOptions = {},
+): Question[] {
+  const inTopics = QUESTIONS.filter((q) => topicIds.includes(q.topicId));
+  const subjects = new Set(inTopics.map((q) => q.subjectId));
+  const ranked = [
+    ...inTopics.filter((q) => difficulty === 'mixed' || q.difficulty === difficulty),
+    ...inTopics,
+    ...QUESTIONS.filter((q) => subjects.has(q.subjectId)),
+  ];
+  const pool = ranked.length > 0 ? [...new Set(ranked)] : [...QUESTIONS];
   const out: Question[] = [];
   for (let i = 0; i < count; i++) {
-    const q = source[i % source.length];
+    const q = pool[(offset + i) % pool.length];
     if (q) out.push(q);
   }
   return out;

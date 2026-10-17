@@ -14,6 +14,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ToastProvider } from '@/components/ui/Toast';
 import { SessionProvider, useSession } from '@/state/session';
+import { StudyProvider } from '@/state/study';
 import { ThemeProvider } from '@/theme/ThemeProvider';
 import { useTheme } from '@/theme/useTheme';
 
@@ -74,9 +75,11 @@ export default function RootLayout() {
       <SafeAreaProvider>
         <ThemeProvider>
           <SessionProvider>
-            <ToastProvider>
-              <RootStack />
-            </ToastProvider>
+            <StudyProvider>
+              <ToastProvider>
+                <RootStack />
+              </ToastProvider>
+            </StudyProvider>
           </SessionProvider>
         </ThemeProvider>
       </SafeAreaProvider>
