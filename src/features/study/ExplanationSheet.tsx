@@ -18,6 +18,8 @@ export interface ExplanationSheetProps {
   visible: boolean;
   onClose: () => void;
   question: Question;
+  /** Review screens show the explanation inline, so their Report button opens the form. */
+  startIn?: 'explain' | 'report';
 }
 
 type Mode = 'explain' | 'report' | 'sent';
@@ -32,16 +34,21 @@ const titles: Record<Mode, string> = {
  * KOT walks through the answer. Explanations are AI-written, so the sheet always offers
  * a report flow. Mount with `key={question.id}` so each question starts fresh.
  */
-export function ExplanationSheet({ visible, onClose, question }: ExplanationSheetProps) {
+export function ExplanationSheet({
+  visible,
+  onClose,
+  question,
+  startIn = 'explain',
+}: ExplanationSheetProps) {
   const { theme } = useTheme();
-  const [mode, setMode] = useState<Mode>('explain');
+  const [mode, setMode] = useState<Mode>(startIn);
   const [reported, setReported] = useState(false);
   const answer = question.choices.find((c) => c.id === question.answerId);
 
   const close = () => {
     onClose();
-    // Reopening shows the explanation again, never a half-filled form.
-    if (mode !== 'explain') setMode('explain');
+    // Reopening starts over, never on a half-filled form.
+    if (mode !== startIn) setMode(startIn);
   };
 
   return (
@@ -85,7 +92,8 @@ export function ExplanationSheet({ visible, onClose, question }: ExplanationShee
       {mode === 'report' ? (
         <Animated.View entering={FadeIn.duration(durations.fast)}>
           <ReportExplanation
-            onBack={() => setMode('explain')}
+            onBack={startIn === 'report' ? close : () => setMode('explain')}
+            backLabel={startIn === 'report' ? 'Cancel' : 'Back'}
             onSend={() => {
               haptics.success();
               setReported(true);

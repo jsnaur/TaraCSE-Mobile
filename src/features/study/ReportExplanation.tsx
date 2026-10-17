@@ -12,12 +12,14 @@ type Reason = (typeof REASONS)[number];
 
 export interface ReportExplanationProps {
   onBack: () => void;
+  /** "Back" when the form came from the explanation, "Cancel" when it opened on its own. */
+  backLabel?: string;
   /** Nothing is sent anywhere yet; the prototype only moves to the thank-you state. */
   onSend: (report: { reason: Reason; note: string }) => void;
 }
 
 /** Report form for an AI-written explanation (docs/PLAY_STORE.md §3). */
-export function ReportExplanation({ onBack, onSend }: ReportExplanationProps) {
+export function ReportExplanation({ onBack, backLabel = 'Back', onSend }: ReportExplanationProps) {
   const [reason, setReason] = useState<Reason | null>(null);
   const [note, setNote] = useState('');
 
@@ -40,7 +42,7 @@ export function ReportExplanation({ onBack, onSend }: ReportExplanationProps) {
         placeholder="What should it say instead?"
       />
       <View style={styles.actions}>
-        <Button label="Back" variant="ghost" onPress={onBack} />
+        <Button label={backLabel} variant="ghost" onPress={onBack} />
         <Button
           label="Send report"
           disabled={reason === null}

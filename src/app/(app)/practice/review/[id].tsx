@@ -1,11 +1,3 @@
-import { PlaceholderScreen } from '@/features/placeholder/PlaceholderScreen';
+import { PracticeReviewScreen } from '@/features/practice/review/PracticeReviewScreen';
 
-export default function PracticeReview() {
-  return (
-    <PlaceholderScreen
-      title="Review"
-      note="Answered list, filter correct/wrong, expand for explanation."
-      links={[{ label: 'Back to Practice', href: '/practice' }]}
-    />
-  );
-}
+export default PracticeReviewScreen;
