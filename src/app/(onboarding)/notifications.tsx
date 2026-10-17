@@ -1,11 +1,3 @@
-import { PlaceholderScreen } from '@/features/placeholder/PlaceholderScreen';
+import { RemindersScreen } from '@/features/onboarding/RemindersScreen';
 
-export default function Notifications() {
-  return (
-    <PlaceholderScreen
-      title="Reminders"
-      note="Opt-in UI only: daily reminder time, streak alerts."
-      links={[{ label: 'Continue', href: '/done' }]}
-    />
-  );
-}
+export default RemindersScreen;
