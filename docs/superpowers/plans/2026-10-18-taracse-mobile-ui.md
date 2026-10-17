@@ -664,6 +664,27 @@ npm run format && git add -A && git commit -m "docs: README, agent guides, desig
 
 If no phone is attached, verify with the local Android emulator instead and mark the phone check as pending for the owner.
 
+### Phase 0 execution notes (2026-10-18)
+
+Deviations found while executing, which later phases must follow:
+
+- Template ships `src/app/` already, plus its own `AGENTS.md`, `.claude/settings.json`
+  (Expo plugin) and `.vscode/`. Example components, hooks, constants and images were
+  deleted by hand; there was no interactive reset needed.
+- TypeScript 6 defaults `types` to `[]`, so `tsconfig.json` sets `"types": ["jest"]`.
+- `@testing-library/react-native@14` is async: `await render()` and
+  `await fireEvent.press()`. Route tests import from `expo-router/testing-library`.
+- `npm audit --audit-level=high` cannot pass: `braces@3.0.3` and `node-forge@1.4.0` are
+  the latest releases and are flagged. CI runs `npm run audit` (`scripts/audit.mjs`)
+  instead, which fails only on unreviewed advisories. Allowlist documented in
+  `docs/SECURITY.md`.
+- gitleaks is not installed on the dev machine; the hook skips with a warning. CI scans.
+- Tabs API: `Tabs` from `expo-router/js-tabs`, `tabBar` prop, bar props
+  `{ state, descriptors, emitter, navigateToTab, insets }`. Details in `docs/ROUTER_TABS.md`.
+- Public skills pinned at: expo/skills `927dd7c`, vercel-labs/agent-skills `063bee9`,
+  callstackincubator/agent-skills `59e9d17`, nextlevelbuilder/ui-ux-pro-max-skill
+  `56ea9cf`, anthropics/skills `dbd4588`.
+
 ---
 
 ## Phase 1: Design system + route skeleton (outline)
