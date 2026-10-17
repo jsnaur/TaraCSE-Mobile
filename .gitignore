@@ -50,3 +50,6 @@ example
 # screenshots and local scratch
 .screenshots/
 scratch/
+
+# session handoffs (local only)
+docs/handoffs/
