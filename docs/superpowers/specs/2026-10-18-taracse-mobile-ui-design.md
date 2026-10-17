@@ -32,23 +32,23 @@ buy anything (see §5).
 
 ## 2. Decisions
 
-| Topic | Decision |
-|---|---|
-| Scope | Student/reviewee screens only |
-| Visual direction | Keep identity, redo craft |
-| Repo | Standalone `C:\TaraCSE-mobile`, branches `main` + `develop` |
-| Payments | None in app. Web-only purchases. No steering of any kind (§5) |
-| Framework | **Expo SDK 58** (latest stable, released 2026-10-15; React Native 0.88). Exact versions pinned at scaffold via `npx expo install` |
-| Scaffold command | `npx create-expo-app@latest --template default@sdk-58` (plain `create-expo-app` still defaults to SDK 57 at time of writing) |
-| Node | Local v24.17.0 satisfies SDK 58's requirement (22.13+, 24.3+, or 26+) |
-| Preview target | Physical Android phone. See §2.1 for how, since Expo Go for SDK 58 is not yet in the Play Store |
-| Routing | Expo Router, typed routes |
-| Styling | `StyleSheet` + typed design tokens + `useTheme()` hook. No NativeWind, no Tamagui |
-| Motion | Reanimated, Gesture Handler, `expo-haptics`, `expo-blur` (versions per SDK 58) |
-| Icons | `lucide-react-native` (continuity with web) over `react-native-svg` |
-| Fonts | Space Grotesk (display, numbers) + Inter (body) via `@expo-google-fonts/*` |
-| Fake state | React context + `useReducer`, in memory only |
-| Committer | `jsnaur <jasnerr45@gmail.com>` (global git config, confirmed by owner) |
+| Topic            | Decision                                                                                                                          |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Scope            | Student/reviewee screens only                                                                                                     |
+| Visual direction | Keep identity, redo craft                                                                                                         |
+| Repo             | Standalone `C:\TaraCSE-mobile`, branches `main` + `develop`                                                                       |
+| Payments         | None in app. Web-only purchases. No steering of any kind (§5)                                                                     |
+| Framework        | **Expo SDK 58** (latest stable, released 2026-10-15; React Native 0.88). Exact versions pinned at scaffold via `npx expo install` |
+| Scaffold command | `npx create-expo-app@latest --template default@sdk-58` (plain `create-expo-app` still defaults to SDK 57 at time of writing)      |
+| Node             | Local v24.17.0 satisfies SDK 58's requirement (22.13+, 24.3+, or 26+)                                                             |
+| Preview target   | Physical Android phone. See §2.1 for how, since Expo Go for SDK 58 is not yet in the Play Store                                   |
+| Routing          | Expo Router, typed routes                                                                                                         |
+| Styling          | `StyleSheet` + typed design tokens + `useTheme()` hook. No NativeWind, no Tamagui                                                 |
+| Motion           | Reanimated, Gesture Handler, `expo-haptics`, `expo-blur` (versions per SDK 58)                                                    |
+| Icons            | `lucide-react-native` (continuity with web) over `react-native-svg`                                                               |
+| Fonts            | Space Grotesk (display, numbers) + Inter (body) via `@expo-google-fonts/*`                                                        |
+| Fake state       | React context + `useReducer`, in memory only                                                                                      |
+| Committer        | `jsnaur <jasnerr45@gmail.com>` (global git config, confirmed by owner)                                                            |
 
 ### 2.1 Previewing SDK 58 on a phone
 
@@ -121,6 +121,7 @@ TaraCSE-mobile/
 ```
 
 Rules:
+
 - Route files in `src/app/` only compose feature components. No styling logic or
   fixtures live there.
 - One component per file; files that grow past ~200 lines get split.
@@ -148,13 +149,13 @@ Any credentials typed are ignored. "Log in" and "Create account" just set fake s
 
 ### 4.2 Tabs (signed in)
 
-| Tab | Root screen | Pushes to |
-|---|---|---|
-| Home | Exam countdown, daily goal ring, continue last session, weak-topic nudge | Duel, Bookmarks |
-| Practice | Topic list with mastery per topic | Practice setup → Session → Review |
-| Mock | Readiness score, past attempts | Mock setup → Exam → Results → Review answers |
-| Progress | Analytics: trend chart, subject breakdown, weak spots | Achievements, Leaderboard |
-| Profile | Account summary, plan badge | Settings, Plan, Suggestions, Terms, Privacy, Delete account, Sign out |
+| Tab      | Root screen                                                              | Pushes to                                                             |
+| -------- | ------------------------------------------------------------------------ | --------------------------------------------------------------------- |
+| Home     | Exam countdown, daily goal ring, continue last session, weak-topic nudge | Duel, Bookmarks                                                       |
+| Practice | Topic list with mastery per topic                                        | Practice setup → Session → Review                                     |
+| Mock     | Readiness score, past attempts                                           | Mock setup → Exam → Results → Review answers                          |
+| Progress | Analytics: trend chart, subject breakdown, weak spots                    | Achievements, Leaderboard                                             |
+| Profile  | Account summary, plan badge                                              | Settings, Plan, Suggestions, Terms, Privacy, Delete account, Sign out |
 
 ### 4.3 Stacked screens
 
@@ -256,6 +257,7 @@ and feature graphic, and the steering rules above. The app's UI is built so none
 these require redesign later.
 
 Sources:
+
 - Google Play Payments policy — https://support.google.com/googleplay/android-developer/answer/9858738
 - External content links program (US) — https://support.google.com/googleplay/android-developer/answer/16470497
 - RevenueCat, app-to-web purchase guidelines — https://www.revenuecat.com/blog/engineering/app-to-web-purchase-guidelines
@@ -360,7 +362,7 @@ Real KOT and logo images are copied from `C:\TaraCSE\public\images\kot` and
 - **gitleaks** scan on pre-commit (Husky + lint-staged) and in CI.
 - **Dependencies:** lockfile committed; installs via `npx expo install` to stay
   SDK-aligned; `npm ci` in CI; Dependabot for npm and GitHub Actions; `npm audit
-  --audit-level=high` in CI. Third-party skills are pinned by commit hash in
+--audit-level=high` in CI. Third-party skills are pinned by commit hash in
   `skills-lock.json`.
 - **Future auth tokens** go in `expo-secure-store`, never AsyncStorage. Documented in
   `docs/` now; not installed until needed.
@@ -387,6 +389,7 @@ Real KOT and logo images are copied from `C:\TaraCSE\public\images\kot` and
 ### 10.1 Claude Code skills and agents
 
 **Copied from `C:\getsmo-portal\.claude`:**
+
 - Skills: `antislop`, `antislop-ui`, `antislop-layoutmobile`, `antislop-copywriting`,
   `antislop-code`, `antislop-human`, `apple-design`, `emil-design-eng`, `animate`,
   `animation-vocabulary`, `improve-animations`, `review-animations`,
@@ -398,13 +401,13 @@ Real KOT and logo images are copied from `C:\TaraCSE\public\images\kot` and
 **Installed from public sources** (checked 2026-10-18; read each SKILL.md before
 installing, pin by commit):
 
-| Source | Skills to install | Why |
-|---|---|---|
-| [expo/skills](https://github.com/expo/skills) (official Expo, ~2.9k★, MIT) | `expo-design-system`, `expo-native-ui`, `expo-ui`, `expo-animation`, `expo-router`, `expo-project-structure`, `eas-app-stores` | Official SDK-current guidance; `expo-design-system` explicitly targets "native-slop" tells; `eas-app-stores` for later Play submission |
-| [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) (~32.5k★) | `react-native-skills` | RN/Expo performance, lists, animation practices |
-| [callstackincubator/agent-skills](https://github.com/callstackincubator/agent-skills) (~1.7k★) | `react-native-best-practices` | Performance and animation correctness from a core RN contributor team |
-| [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (~137k★) | `ui-ux-pro-max` only | Searchable palettes, type pairings, UX rules; has a `react-native` stack file. Use as reference, subordinate to `DESIGN.md` and antislop |
-| [anthropics/skills](https://github.com/anthropics/skills) (~182k★) | `frontend-design` | Taste and anti-generic direction; web-oriented, so apply principles only |
+| Source                                                                                                   | Skills to install                                                                                                              | Why                                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [expo/skills](https://github.com/expo/skills) (official Expo, ~2.9k★, MIT)                               | `expo-design-system`, `expo-native-ui`, `expo-ui`, `expo-animation`, `expo-router`, `expo-project-structure`, `eas-app-stores` | Official SDK-current guidance; `expo-design-system` explicitly targets "native-slop" tells; `eas-app-stores` for later Play submission   |
+| [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) (~32.5k★)                        | `react-native-skills`                                                                                                          | RN/Expo performance, lists, animation practices                                                                                          |
+| [callstackincubator/agent-skills](https://github.com/callstackincubator/agent-skills) (~1.7k★)           | `react-native-best-practices`                                                                                                  | Performance and animation correctness from a core RN contributor team                                                                    |
+| [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) (~137k★) | `ui-ux-pro-max` only                                                                                                           | Searchable palettes, type pairings, UX rules; has a `react-native` stack file. Use as reference, subordinate to `DESIGN.md` and antislop |
+| [anthropics/skills](https://github.com/anthropics/skills) (~182k★)                                       | `frontend-design`                                                                                                              | Taste and anti-generic direction; web-oriented, so apply principles only                                                                 |
 
 Skipped: `devanshudesai/agent-skills` (Liquid Glass is iOS-specific; app ships to Play
 first), `maxgorriaran/react-native-expo-agent-skills` (no adoption signal).

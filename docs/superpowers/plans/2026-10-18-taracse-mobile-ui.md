@@ -53,10 +53,12 @@ custom-bar API confirmed and recorded, phone preview path confirmed.
 ### Task 0.1: Scaffold Expo SDK 58 app
 
 **Files:**
+
 - Create: everything the `default@sdk-58` template produces, moved into repo root
 - Modify: `.gitignore` (append env + screenshot rules)
 
 **Interfaces:**
+
 - Produces: `package.json` with `expo@~58`, `expo-router`, `src/app/` route root, `npm start`.
 
 The repo already has `docs/`, so scaffold into a temp folder and move it in.
@@ -141,11 +143,13 @@ git commit -m "chore: scaffold Expo SDK 58 app"
 ### Task 0.2: TypeScript strict, alias, dynamic config, env
 
 **Files:**
+
 - Modify: `tsconfig.json`
 - Create: `app.config.ts`, `.env.example`
 - Delete: `app.json` (contents move into `app.config.ts`)
 
 **Interfaces:**
+
 - Produces: `@/*` alias; `npm run typecheck`; config reading only `EXPO_PUBLIC_*`.
 
 - [ ] **Step 1: tsconfig**
@@ -237,9 +241,11 @@ git add -A && git commit -m "chore: strict TypeScript, path alias, dynamic confi
 ### Task 0.3: Lint and format
 
 **Files:**
+
 - Create/Modify: `eslint.config.js`, `.prettierrc`, `.prettierignore`, `.editorconfig`, `.gitattributes`
 
 **Interfaces:**
+
 - Produces: `npm run lint`, `npm run format`.
 
 - [ ] **Step 1: Install**
@@ -324,9 +330,11 @@ git add -A && git commit -m "chore: ESLint flat config and Prettier"
 ### Task 0.4: Jest with jest-expo and RNTL
 
 **Files:**
+
 - Create: `jest.config.js`, `src/lib/__tests__/smoke.test.tsx`
 
 **Interfaces:**
+
 - Produces: `npm test` (`jest`), RNTL `render`/`screen` available.
 
 - [ ] **Step 1: Install**
@@ -378,10 +386,12 @@ git add -A && git commit -m "test: Jest with jest-expo and Testing Library"
 ### Task 0.5: Husky, lint-staged, gitleaks
 
 **Files:**
+
 - Create: `.husky/pre-commit`, `.gitleaksignore`, `scripts/gitleaks-staged.sh`
 - Modify: `package.json` (`prepare`, `lint-staged`)
 
 **Interfaces:**
+
 - Produces: pre-commit runs eslint --fix + prettier on staged files, then gitleaks on staged changes.
 
 gitleaks is a Go binary, not an npm package. The hook runs it when installed and prints
@@ -439,6 +449,7 @@ git add -A && git commit -m "chore: Husky pre-commit with lint-staged and gitlea
 ### Task 0.6: CI and Dependabot
 
 **Files:**
+
 - Create: `.github/workflows/ci.yml`, `.github/dependabot.yml`
 
 - [ ] **Step 1: ci.yml**
@@ -516,9 +527,11 @@ git add -A && git commit -m "ci: lint, typecheck, test, audit, doctor, gitleaks"
 ### Task 0.7: Claude skills and agents
 
 **Files:**
+
 - Create: `.claude/skills/<14 copied skills>/`, `.claude/skills/<9 public skills>/`, `.claude/agents/code-quality-reviewer.md`, `.claude/agents/security-reviewer.md`, `skills-lock.json`
 
 **Interfaces:**
+
 - Produces: skills listed in §10.1 available to Claude Code in this repo.
 
 - [ ] **Step 1: Copy local skills**
@@ -535,13 +548,13 @@ done
 
 Clone each source shallowly into the session scratchpad (not the repo), record `git rev-parse HEAD`, read each target `SKILL.md` (and any scripts it ships) for anything that runs network calls or code on load; only then copy the skill folder.
 
-| Repo | Skills |
-|---|---|
-| `expo/skills` | `expo-design-system`, `expo-native-ui`, `expo-ui`, `expo-animation`, `expo-router`, `expo-project-structure`, `eas-app-stores` |
-| `vercel-labs/agent-skills` | `react-native-skills` |
-| `callstackincubator/agent-skills` | `react-native-best-practices` |
-| `nextlevelbuilder/ui-ux-pro-max-skill` | `ui-ux-pro-max` |
-| `anthropics/skills` | `frontend-design` |
+| Repo                                   | Skills                                                                                                                         |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `expo/skills`                          | `expo-design-system`, `expo-native-ui`, `expo-ui`, `expo-animation`, `expo-router`, `expo-project-structure`, `eas-app-stores` |
+| `vercel-labs/agent-skills`             | `react-native-skills`                                                                                                          |
+| `callstackincubator/agent-skills`      | `react-native-best-practices`                                                                                                  |
+| `nextlevelbuilder/ui-ux-pro-max-skill` | `ui-ux-pro-max`                                                                                                                |
+| `anthropics/skills`                    | `frontend-design`                                                                                                              |
 
 Skill folder names in the source repos may differ from the names above; locate by `name:` in SKILL.md frontmatter.
 
@@ -582,10 +595,12 @@ git add -A && git commit -m "chore: add Claude skills and review agents"
 ### Task 0.8: Confirm SDK 58 Tabs custom-bar API (§2.2)
 
 **Files:**
+
 - Create: `docs/ROUTER_TABS.md`
 - Create (temporary spike, deleted after): `src/app/(spike)/_layout.tsx`, two child screens
 
 **Interfaces:**
+
 - Produces: the exact import + prop used to render a custom tab bar under SDK 58, consumed by Phase 1's FloatingTabBar task.
 
 - [ ] **Step 1: Read sources**
@@ -612,6 +627,7 @@ git add -A && git commit -m "docs: record SDK 58 Tabs custom-bar API"
 ### Task 0.9: Project docs
 
 **Files:**
+
 - Create: `README.md`, `CLAUDE.md`, `AGENTS.md`, `docs/DESIGN.md`, `docs/PLAY_STORE.md`, `docs/SECURITY.md`
 
 - [ ] **Step 1: docs/DESIGN.md**
