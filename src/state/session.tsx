@@ -13,11 +13,14 @@ export interface SessionState {
   status: SessionStatus;
   plan: Plan;
   profile: Profile | null;
+  /** Address the last password-reset link went to, shown on the check-email screen. */
+  resetEmail: string | null;
 }
 
 export type SessionAction =
   | { type: 'signIn' }
   | { type: 'register'; name: string; email: string }
+  | { type: 'requestReset'; email: string }
   | { type: 'completeOnboarding'; patch: Partial<Profile> }
   | { type: 'updateProfile'; patch: Partial<Profile> }
   | { type: 'signOut' }
@@ -25,14 +28,31 @@ export type SessionAction =
   | { type: 'setPlan'; plan: Plan }
   | { type: 'setStatus'; status: SessionStatus };
 
-export const initialSession: SessionState = { status: 'signedOut', plan: 'free', profile: null };
+export const initialSession: SessionState = {
+  status: 'signedOut',
+  plan: 'free',
+  profile: null,
+  resetEmail: null,
+};
 
 export function sessionReducer(state: SessionState, action: SessionAction): SessionState {
   switch (action.type) {
     case 'signIn':
-      return { ...state, status: 'signedIn', profile: state.profile ?? sampleProfile };
+      return {
+        ...state,
+        status: 'signedIn',
+        profile: state.profile ?? sampleProfile,
+        resetEmail: null,
+      };
     case 'register':
-      return { ...state, status: 'onboarding', profile: blankProfile(action.name, action.email) };
+      return {
+        ...state,
+        status: 'onboarding',
+        profile: blankProfile(action.name, action.email),
+        resetEmail: null,
+      };
+    case 'requestReset':
+      return { ...state, resetEmail: action.email };
     case 'completeOnboarding':
       return {
         ...state,

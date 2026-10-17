@@ -1,11 +1,3 @@
-import { PlaceholderScreen } from '@/features/placeholder/PlaceholderScreen';
+import { ResetPasswordScreen } from '@/features/auth/ResetPasswordScreen';
 
-export default function ResetPassword() {
-  return (
-    <PlaceholderScreen
-      title="New password"
-      note="New password + confirm, strength hint."
-      links={[{ label: 'Save password', href: '/login' }]}
-    />
-  );
-}
+export default ResetPasswordScreen;

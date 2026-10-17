@@ -38,6 +38,15 @@ describe('sessionReducer', () => {
     expect(sessionReducer(premium, { type: 'deleteAccount' })).toEqual(initialSession);
   });
 
+  it('remembers where the reset link went until the next sign in', () => {
+    const requested = sessionReducer(initialSession, {
+      type: 'requestReset',
+      email: 'juan@example.com',
+    });
+    expect(requested).toMatchObject({ status: 'signedOut', resetEmail: 'juan@example.com' });
+    expect(sessionReducer(requested, { type: 'signIn' }).resetEmail).toBeNull();
+  });
+
   it('records a renewal date only for premium', () => {
     const signedIn = sessionReducer(initialSession, { type: 'signIn' });
     const premium = sessionReducer(signedIn, { type: 'setPlan', plan: 'premium' });

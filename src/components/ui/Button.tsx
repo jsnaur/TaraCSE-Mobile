@@ -8,7 +8,8 @@ import { useTheme } from '@/theme/useTheme';
 import { AppText } from './AppText';
 import { PressableScale } from './PressableScale';
 
-export type ButtonVariant = 'primary' | 'accent' | 'secondary' | 'ghost' | 'danger';
+/** `onInk` is a quiet text button for use on an ink (navy) surface. */
+export type ButtonVariant = 'primary' | 'accent' | 'secondary' | 'ghost' | 'danger' | 'onInk';
 
 export interface ButtonProps {
   label: string;
@@ -47,6 +48,7 @@ export function Button({
     secondary: { bg: theme.surface, fg: theme.onSurface, border: theme.borderStrong },
     ghost: { bg: 'transparent', fg: theme.primary, border: 'transparent' },
     danger: { bg: theme.danger, fg: theme.onPrimary, border: 'transparent' },
+    onInk: { bg: 'transparent', fg: theme.onInk, border: 'transparent' },
   }[variant];
   const inactive = disabled || loading;
   const height = size === 'lg' ? 56 : minTouch;

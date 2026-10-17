@@ -26,11 +26,11 @@ export function Card({
   accessibilityLabel,
   style,
 }: CardProps) {
-  const { theme, elevation, isDark } = useTheme();
+  const { theme, elevation } = useTheme();
   const bg = {
     surface: theme.surface,
     sunken: theme.surfaceSunken,
-    ink: isDark ? theme.surfaceRaised : theme.primary,
+    ink: theme.ink,
     accent: theme.accentTint,
   }[tone];
   const containerStyle = [

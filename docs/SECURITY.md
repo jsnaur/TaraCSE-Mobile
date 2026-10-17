@@ -17,6 +17,18 @@
 When real auth lands, session and refresh tokens go in **`expo-secure-store`**. Never
 AsyncStorage, never a file, never a constant. Not installed until it is needed.
 
+Also when real auth lands:
+
+- `/reset-password` is a normal signed-out route, so a deep link opens it. It must read
+  the recovery token from the link, verify it, and send the user to `/forgot-password`
+  when the token is missing or invalid. The prototype reads no token.
+- The reset email held in session state (`resetEmail`) stays in memory only. Do not
+  persist it.
+- Delete the dev-only "wrong" email hook in `LoginScreen`.
+- Routes outside every `Stack.Protected` in `src/app/_layout.tsx` (terms, privacy,
+  maintenance) are reachable by deep link in any state. Keep that list to static
+  documents.
+
 ## Dependencies
 
 - Install with `npx expo install <pkg>` so versions match the Expo SDK.

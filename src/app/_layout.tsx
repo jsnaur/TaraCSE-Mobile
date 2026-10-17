@@ -44,6 +44,10 @@ function RootStack() {
         <Stack.Protected guard={status === 'signedIn'}>
           <Stack.Screen name="(app)" options={{ animation: 'fade' }} />
         </Stack.Protected>
+        {/* Outside every guard, so reachable by deep link in any state. Keep this to static
+            documents (Register links to both); screens with account data belong in a group. */}
+        <Stack.Screen name="terms" />
+        <Stack.Screen name="privacy" />
         <Stack.Screen name="maintenance" />
         <Stack.Protected guard={__DEV__}>
           <Stack.Screen name="dev-menu" options={{ presentation: 'modal' }} />

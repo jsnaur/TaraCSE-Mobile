@@ -30,6 +30,10 @@ export interface ColorRoles {
   warning: string;
   warningTint: string;
   scrim: string;
+  /** Navy hero surface (Home's exam card, Welcome's panel) and the text that sits on it. */
+  ink: string;
+  onInk: string;
+  onInkMuted: string;
   /** Floating tab bar family. Bar content must use these, never the page roles. */
   navBar: string;
   onNavBarMuted: string;
@@ -60,6 +64,9 @@ export const lightColors: ColorRoles = {
   warning: '#A86400',
   warningTint: '#FBEBD2',
   scrim: 'rgba(10, 16, 32, 0.45)',
+  ink: '#1B3577',
+  onInk: '#FFFFFF',
+  onInkMuted: 'rgba(255, 255, 255, 0.7)',
   navBar: '#13214A',
   onNavBarMuted: '#94A0BF',
   navBarPill: '#F5A800',
@@ -89,6 +96,9 @@ export const darkColors: ColorRoles = {
   warning: '#F0A43A',
   warningTint: '#3A2810',
   scrim: 'rgba(0, 0, 0, 0.6)',
+  ink: '#19223A',
+  onInk: '#EDF0F7',
+  onInkMuted: '#A3ABC0',
   navBar: '#1B2540',
   onNavBarMuted: '#8D97B2',
   navBarPill: '#FFB300',

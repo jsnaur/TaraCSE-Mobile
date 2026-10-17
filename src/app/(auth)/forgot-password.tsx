@@ -1,11 +1,3 @@
-import { PlaceholderScreen } from '@/features/placeholder/PlaceholderScreen';
+import { ForgotPasswordScreen } from '@/features/auth/ForgotPasswordScreen';
 
-export default function ForgotPassword() {
-  return (
-    <PlaceholderScreen
-      title="Forgot password"
-      note="Email field, send link."
-      links={[{ label: 'Send reset link', href: '/check-email' }]}
-    />
-  );
-}
+export default ForgotPasswordScreen;

@@ -21,9 +21,8 @@ export interface ExamHeroCardProps {
  * right. The amber ring is the only filled accent on the screen.
  */
 export function ExamHeroCard({ profile, answeredToday }: ExamHeroCardProps) {
-  const { theme, isDark } = useTheme();
-  const onInk = isDark ? theme.onSurface : theme.onPrimary;
-  const onInkMuted = isDark ? theme.onSurfaceMuted : 'rgba(255,255,255,0.68)';
+  const { theme } = useTheme();
+  const { onInk, onInkMuted } = theme;
   const days = profile.examDate ? Math.max(0, daysUntil(profile.examDate)) : null;
   const goal = profile.dailyGoal;
   const goalDone = answeredToday >= goal;
