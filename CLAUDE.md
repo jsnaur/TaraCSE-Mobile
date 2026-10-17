@@ -40,6 +40,7 @@ For UI, copy, people, mobile layout, or code comments work, read `.claude/skills
 - People: `.claude/skills/antislop-human/SKILL.md`
 - Mobile / responsive: `.claude/skills/antislop-layoutmobile/SKILL.md`
 - Code comments: `.claude/skills/antislop-code/SKILL.md`
-  Usage mode is pre-answered in `docs/DESIGN.md`: DURING. Do not ask.
+
+Usage mode is pre-answered in `docs/DESIGN.md`: DURING. Do not ask.
 
 <!-- antislop:end -->
