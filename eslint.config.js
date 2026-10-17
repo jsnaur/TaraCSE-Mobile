@@ -10,6 +10,10 @@ module.exports = defineConfig([
     ignores: ['dist/*', '.expo/*', 'node_modules/*', '.claude/*'],
   },
   {
+    files: ['jest.setup.js'],
+    languageOptions: { globals: { jest: 'readonly' } },
+  },
+  {
     rules: {
       'no-eval': 'error',
       'no-implied-eval': 'error',
