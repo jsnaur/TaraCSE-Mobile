@@ -1,0 +1,2 @@
+# Gitleaks finding fingerprints that were reviewed and confirmed as false positives.
+# Add one per line only after review. Never add real secrets here.
