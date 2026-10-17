@@ -53,7 +53,8 @@
     "format:check": "prettier --check .",
     "test": "jest",
     "test:ci": "jest --ci",
-    "prepare": "husky"
+    "prepare": "husky",
+    "audit": "node scripts/audit.mjs"
   },
   "private": true,
   "lint-staged": {
