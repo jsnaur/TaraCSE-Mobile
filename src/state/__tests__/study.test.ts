@@ -77,4 +77,12 @@ describe('studyReducer', () => {
     s = studyReducer(s, { type: 'toggleBookmark', questionId: 'b' });
     expect(s.bookmarks).toEqual(['a']);
   });
+
+  it('restores a removed bookmark to its old place, once', () => {
+    const base = { ...initialStudy, bookmarks: ['a', 'b', 'c'] };
+    let s = studyReducer(base, { type: 'toggleBookmark', questionId: 'b' });
+    s = studyReducer(s, { type: 'restoreBookmark', questionId: 'b', index: 1 });
+    expect(s.bookmarks).toEqual(['a', 'b', 'c']);
+    expect(studyReducer(s, { type: 'restoreBookmark', questionId: 'b', index: 0 })).toBe(s);
+  });
 });

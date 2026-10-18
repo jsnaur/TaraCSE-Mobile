@@ -300,3 +300,7 @@ export function questionsFor(
   }
   return out;
 }
+
+export function getQuestion(id: string): Question | undefined {
+  return QUESTIONS.find((q) => q.id === id);
+}
