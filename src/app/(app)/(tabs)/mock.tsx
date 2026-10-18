@@ -1,12 +1,3 @@
-import { PlaceholderScreen } from '@/features/placeholder/PlaceholderScreen';
+import { MockScreen } from '@/features/mock/MockScreen';
 
-export default function Mock() {
-  return (
-    <PlaceholderScreen
-      tabRoot
-      title="Mock"
-      note="Readiness against the 80% passing mark, past attempts, new mock."
-      links={[{ label: 'New mock exam', href: '/mock/setup' }]}
-    />
-  );
-}
+export default MockScreen;

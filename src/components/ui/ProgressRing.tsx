@@ -26,6 +26,8 @@ export interface ProgressRingProps {
   /** Arc that leaves a gap at the bottom, like a gauge. 1 = full circle. */
   sweep?: number;
   delay?: number;
+  /** 0 to 1 along the arc: a fixed tick, e.g. the passing mark the value is measured against. */
+  marker?: number;
   children?: ReactNode;
   accessibilityLabel?: string;
 }
@@ -39,6 +41,7 @@ export function ProgressRing({
   onInk = false,
   sweep = 1,
   delay = 120,
+  marker,
   children,
   accessibilityLabel,
 }: ProgressRingProps) {
@@ -68,6 +71,7 @@ export function ProgressRing({
   // Rotate so a partial sweep is centred with its gap at the bottom.
   const rotation = 90 + (360 * (1 - sweep)) / 2;
   const trackColor = onInk ? 'rgba(255,255,255,0.14)' : theme.surfaceSunken;
+  const markerAngle = marker === undefined ? null : 2 * Math.PI * sweep * marker;
 
   return (
     <View
@@ -98,6 +102,16 @@ export function ProgressRing({
           strokeDasharray={`${arc} ${circumference}`}
           animatedProps={animatedProps}
         />
+        {markerAngle !== null ? (
+          <Circle
+            cx={size / 2 + r * Math.cos(markerAngle)}
+            cy={size / 2 + r * Math.sin(markerAngle)}
+            r={stroke / 2 + 1}
+            fill={onInk ? theme.onInk : theme.onSurface}
+            stroke={onInk ? theme.ink : theme.background}
+            strokeWidth={2}
+          />
+        ) : null}
       </Svg>
       {children ? <View style={styles.center}>{children}</View> : null}
     </View>

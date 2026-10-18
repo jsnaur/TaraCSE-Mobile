@@ -1,10 +1,3 @@
-import { PlaceholderScreen } from '@/features/placeholder/PlaceholderScreen';
+import { BookmarksScreen } from '@/features/bookmarks/BookmarksScreen';
 
-export default function Bookmarks() {
-  return (
-    <PlaceholderScreen
-      title="Bookmarks"
-      note="Saved questions list, remove, open in review mode."
-    />
-  );
-}
+export default BookmarksScreen;

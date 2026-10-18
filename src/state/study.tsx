@@ -1,11 +1,13 @@
 import { createContext, useContext, useMemo, useReducer, type ReactNode } from 'react';
 
+import { SAMPLE_BOOKMARKS } from '@/mocks/bookmarks';
 import { questionsFor } from '@/mocks/questions';
 import type { ChoiceId, PracticeConfig, Question } from '@/types/exam';
 
 /**
  * Fake, in-memory study state: practice runs and bookmarks. Like the session, a reload
- * starts empty, so screens that read a run must handle a missing one.
+ * resets it (runs empty, bookmarks back to the sample set), so screens that read a run
+ * must handle a missing one.
  */
 
 /** Questions dealt at a time. Endless runs deal another batch as they near the end. */
@@ -31,9 +33,14 @@ export type StudyAction =
   | { type: 'answer'; runId: string; index: number; choice: ChoiceId }
   | { type: 'dealMore'; runId: string }
   | { type: 'finish'; runId: string }
-  | { type: 'toggleBookmark'; questionId: string };
+  | { type: 'toggleBookmark'; questionId: string }
+  /** Undo for a removal: puts the bookmark back where it was. */
+  | { type: 'restoreBookmark'; questionId: string; index: number };
 
 export const initialStudy: StudyState = { runs: {}, bookmarks: [] };
+
+/** What the app starts with: a returning student who has saved a few questions. */
+export const sampleStudy: StudyState = { runs: {}, bookmarks: [...SAMPLE_BOOKMARKS] };
 
 function deal(config: PracticeConfig, offset: number): Question[] {
   return questionsFor(config.topicIds, config.count ?? ENDLESS_BATCH, {
@@ -93,6 +100,12 @@ export function studyReducer(state: StudyState, action: StudyAction): StudyState
           ? state.bookmarks.filter((id) => id !== action.questionId)
           : [action.questionId, ...state.bookmarks],
       };
+    case 'restoreBookmark': {
+      if (state.bookmarks.includes(action.questionId)) return state;
+      const bookmarks = [...state.bookmarks];
+      bookmarks.splice(action.index, 0, action.questionId);
+      return { ...state, bookmarks };
+    }
   }
 }
 
@@ -133,7 +146,7 @@ const StudyContext = createContext<StudyValue | null>(null);
 
 export function StudyProvider({
   children,
-  initial = initialStudy,
+  initial = sampleStudy,
 }: {
   children: ReactNode;
   initial?: StudyState;
