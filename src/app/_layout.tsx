@@ -13,6 +13,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { ToastProvider } from '@/components/ui/Toast';
+import { MockProvider } from '@/state/mock';
 import { SessionProvider, useSession } from '@/state/session';
 import { StudyProvider } from '@/state/study';
 import { ThemeProvider } from '@/theme/ThemeProvider';
@@ -80,9 +81,11 @@ export default function RootLayout() {
         <ThemeProvider>
           <SessionProvider>
             <StudyProvider>
-              <ToastProvider>
-                <RootStack />
-              </ToastProvider>
+              <MockProvider>
+                <ToastProvider>
+                  <RootStack />
+                </ToastProvider>
+              </MockProvider>
             </StudyProvider>
           </SessionProvider>
         </ThemeProvider>

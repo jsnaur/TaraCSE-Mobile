@@ -1,4 +1,4 @@
-import { Check, ChevronDown, Flag, X } from 'lucide-react-native';
+import { Check, ChevronDown, Flag, Minus, X } from 'lucide-react-native';
 import { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
@@ -22,7 +22,10 @@ export interface ReviewRowProps {
   /** 1-based number in the session. */
   number: number;
   question: Question;
-  picked: ChoiceId;
+  /** `null` when a mock item was left blank. */
+  picked: ChoiceId | null;
+  /** Mock items the student flagged while answering. */
+  flagged?: boolean;
   expanded: boolean;
   onToggle: () => void;
   onReport: () => void;
@@ -42,13 +45,16 @@ export function ReviewRow({
   onToggle,
   onReport,
   showDivider,
+  flagged = false,
 }: ReviewRowProps) {
   const { theme } = useTheme();
   const reduceMotion = useReducedMotion();
   const right = picked === question.answerId;
   const pickedText = question.choices.find((c) => c.id === picked)?.text;
   const answerText = question.choices.find((c) => c.id === question.answerId)?.text;
-  const Mark = right ? Check : X;
+  const blank = picked === null;
+  const Mark = right ? Check : blank ? Minus : X;
+  const status = right ? 'right' : blank ? 'blank' : 'wrong';
 
   const turn = useSharedValue(expanded ? 1 : 0);
   useEffect(() => {
@@ -66,7 +72,7 @@ export function ReviewRow({
     >
       <PressableScale
         accessibilityRole="button"
-        accessibilityLabel={`Question ${number}, ${right ? 'right' : 'wrong'}. ${question.prompt}`}
+        accessibilityLabel={`Question ${number}, ${status}${flagged ? ', flagged' : ''}. ${question.prompt}`}
         accessibilityState={{ expanded }}
         accessibilityHint={expanded ? 'Hides the explanation' : 'Shows the explanation'}
         pressedScale={0.99}
@@ -77,13 +83,26 @@ export function ReviewRow({
         style={styles.head}
       >
         <View
-          style={[styles.mark, { backgroundColor: right ? theme.successTint : theme.dangerTint }]}
+          style={[
+            styles.mark,
+            {
+              backgroundColor: right
+                ? theme.successTint
+                : blank
+                  ? theme.surfaceSunken
+                  : theme.dangerTint,
+            },
+          ]}
         >
-          <Mark size={14} color={right ? theme.success : theme.danger} strokeWidth={3} />
+          <Mark
+            size={14}
+            color={right ? theme.success : blank ? theme.onSurfaceMuted : theme.danger}
+            strokeWidth={3}
+          />
         </View>
         <View style={styles.flex}>
           <AppText variant="caption" tone="subtle" numeric>
-            {`Q${number}`}
+            {flagged ? `Q${number}  ·  Flagged` : `Q${number}`}
           </AppText>
           <AppText variant="body" numberOfLines={expanded ? undefined : 2}>
             {question.prompt}
@@ -96,7 +115,11 @@ export function ReviewRow({
 
       {expanded ? (
         <Animated.View entering={FadeIn.duration(durations.base)} style={styles.detail}>
-          {!right ? (
+          {blank ? (
+            <AppText variant="label" tone="muted">
+              You left this blank.
+            </AppText>
+          ) : !right ? (
             <AppText variant="label" tone="danger">
               {`You picked ${picked}. ${pickedText ?? ''}`}
             </AppText>

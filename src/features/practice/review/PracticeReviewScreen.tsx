@@ -10,11 +10,11 @@ import { Screen } from '@/components/ui/Screen';
 import { ScreenHeader } from '@/components/ui/ScreenHeader';
 import { SegmentedControl } from '@/components/ui/SegmentedControl';
 import { ExplanationSheet } from '@/features/study/ExplanationSheet';
+import { ReviewRow } from '@/features/study/ReviewRow';
 import { scoreRun, useStartPractice, useStudy } from '@/state/study';
 import type { ChoiceId, Question } from '@/types/exam';
 import { gutter, spacing } from '@/theme/tokens';
 
-import { ReviewRow } from './ReviewRow';
 import { ScoreSummary } from './ScoreSummary';
 
 type Filter = 'all' | 'wrong' | 'right';
